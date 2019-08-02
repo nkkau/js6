@@ -22,19 +22,11 @@
     </style>
 </head>
 <body onload='init()'>
-<h2><span id="chart">Average</span> Movies: Budget vs Gross</h2>
-<svg class="bar-chart"></svg>
+<h2><span id="chart">2010-2016</span> Movies: ROI</h2>
+<svg class="roi-chart"></svg>
 <form>
-    <button type="button" id="overview">Overview</button>
-    <button type="button" id="lowb">Low Budget Film</button>
-    <button type="button" id="medb">Med Budget Film</button>
-    <button type="button" id="highb">High Budget Film</button>
-    <button type="button" style=background-color:Gold id="ani">Animation</button>
-    <button type="button" style=background-color:Red id="adv">Adventure</button>
-    <button type="button" style=background-color:LightGreen id="com">Comedy</button>
-    <button type="button" style=background-color:DarkGray id="hor">Horror</button>
-    <button type="button" style=background-color:SkyBlue id="dra">Drama</button>
-    <button type="submit" formaction="index.html">Previous Page</button>
+  <button type="button" id="overview">Click Here</button>
+  <button type="submit" formaction="MovieBvsG_Voronoi.html">Next Page</button>
 </form>
 <script>
 async function init() {
@@ -65,6 +57,30 @@ getGenreFilm = function(data, genre) {
  });
  return ret;
 }
+getYearFilm = function(data, year) {
+  let ret = [];
+  data.forEach(function(d) {
+    if (d.year == year) {
+      ret.push(d);
+    }
+ });
+ return ret;
+}
+getROIave = function(data, genre) {
+ let troi = 0;
+  data.forEach(function(d) {
+    if (genre.has(d.genre)) {
+      troi += d.roi
+    }
+  });
+  return troi/data.length
+}
+//************************* voronoi
+//Tooltip (in body containter) offsets for SVG container display
+ttoffsety = 250 //use 75 for html file
+//************************* voronoi
+//Tooltip (in body containter) offsets for SVG container display
+ttoffsetx = 80 //use 75 for html file
 //Generate a list of data, one for each scene (chart)
 gendata = function(alldata) {
   let ret = [];
@@ -79,6 +95,7 @@ gendata = function(alldata) {
   let comedy = d3.set().add("Comedy")
   let adventure = d3.set().add("Action").add("Adventure").add("Sci-Fi").add("Thriller")
   let animation = d3.set().add("Animation")
+  let allgenre = d3.set().add("Drama").add("Crime").add("Biography").add("Fantasy").add("Mystery").add("Romance").add("Western").add("Horror").add("Comedy").add("Action").add("Adventure").add("Sci-Fi").add("Thriller").add("Animation")
 
   ret[4] = getGenreFilm(alldata, animation);
   ret[5] = getGenreFilm(alldata, adventure);
@@ -86,15 +103,17 @@ gendata = function(alldata) {
   ret[7] = getGenreFilm(alldata, horror);
   ret[8] = getGenreFilm(alldata, drama);
 
+  ret[9] = getYearFilm(alldata, 2010);
+  ret[10] = getYearFilm(alldata, 2011);
+  ret[11] = getYearFilm(alldata, 2012);
+  ret[12] = getYearFilm(alldata, 2013);
+  ret[13] = getYearFilm(alldata, 2014);
+  ret[14] = getYearFilm(alldata, 2015);
+  ret[15] = getYearFilm(alldata, 2016);
+
   return ret;
 }
 data = gendata(alldata);
-//************************* voronoi
-//Tooltip (in body containter) offsets for SVG container display
-ttoffsety = 75 //230
-//************************* voronoi
-//Tooltip (in body containter) offsets for SVG container display
-ttoffsetx = 75 //80
 //SVG generation for the scenes
 {
   let animation = "Gold",
@@ -214,11 +233,15 @@ ttoffsetx = 75 //80
   d3.selectAll("button")
     .on("click", function() {
         chart.current = charts.filter(c => c.key == this.id)[0]; // the button's ID
-        draw();
+//***********        draw();
+    d3.select(".bar-chart")
+  .append("div")
+  //.html("<a href='https://nkkau.github.io/js6/MovieBvsG_Voronoi.html'>new page</a>");
+     .html("<a href='MovieBvsG_Voronoi.html'>new page</a>");
     });
 
   //initial draw (default - overview)
-  draw();
+//*********  draw();
 
   //Drawing function for each scene
   function draw() {
