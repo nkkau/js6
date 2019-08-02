@@ -25,16 +25,16 @@
 <h2><span id="chart">Average</span> Movies: Budget vs Gross</h2>
 <svg class="bar-chart"></svg>
 <form>
-    <button type="button" id="overview">Overview</button>
-    <button type="button" id="lowb">Low Budget Film</button>
-    <button type="button" id="medb">Med Budget Film</button>
-    <button type="button" id="highb">High Budget Film</button>
-    <button type="button" style=background-color:Gold id="ani">Animation</button>
-    <button type="button" style=background-color:Red id="adv">Adventure</button>
-    <button type="button" style=background-color:LightGreen id="com">Comedy</button>
-    <button type="button" style=background-color:DarkGray id="hor">Horror</button>
-    <button type="button" style=background-color:SkyBlue id="dra">Drama</button>
-    <button type="submit" formaction="index.html">Previous Page</button>
+    <button type="button" id="overview">>Overview</button>
+    <button type="button" id="lowb">>Low Budget</button>
+    <button type="button" id="medb">>Med Budget</button>
+    <button type="button" id="highb">>High Budget</button>
+    <button type="button" style=background-color:Gold id="ani">>Animation</button>
+    <button type="button" style=background-color:Red id="adv">>Adventure</button>
+    <button type="button" style=background-color:LightGreen id="com">>Comedy</button>
+    <button type="button" style=background-color:DarkGray id="hor">>Horror</button>
+    <button type="button" style=background-color:SkyBlue id="dra">>Drama</button>
+    <button type="submit" formaction="index.html">>Author-Driven Content</button>
 </form>
 <script>
 async function init() {
@@ -89,12 +89,10 @@ gendata = function(alldata) {
   return ret;
 }
 data = gendata(alldata);
-//************************* voronoi
 //Tooltip (in body containter) offsets for SVG container display
-ttoffsety = 75 //230
-//************************* voronoi
+ttoffsety = 75
 //Tooltip (in body containter) offsets for SVG container display
-ttoffsetx = 75 //80
+ttoffsetx = 75
 //SVG generation for the scenes
 {
   let animation = "Gold",
@@ -289,7 +287,7 @@ ttoffsetx = 75 //80
         .append('text')
         .text(numloss(data[chart.current.index]) + " of " + data[chart.current.index].length + " lost money: ROI<100%")
         .attr("x", xx(maxvalue.budget))
-        .attr("y", y(maxvalue.budget))
+        .attr("y", y(maxvalue.budget*0.5))
         //.attr("dy",".35em")
         .attr("opacity", "0.7")
         .style("text-anchor","end")
